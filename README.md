@@ -100,6 +100,14 @@ Rule-based recommendations and warnings integrated into the patient workflow:
 - **Complete audit trail** — Every action logged with department, actor, timestamp, and API trace, enabling pattern recognition across cases
 
 ---
+<img width="1121" height="669" alt="Image" src="https://github.com/user-attachments/assets/861b1777-5df3-4f1b-a8f7-105e9bab1e51" />
+<img width="1500" height="552" alt="Image" src="https://github.com/user-attachments/assets/54371e97-ffe2-4b3f-a858-17bc4bb84acf" />
+<img width="360" height="853" alt="Image" src="https://github.com/user-attachments/assets/84266a7a-63cc-4ae2-b5d6-d8921ce71681" />
+<img width="385" height="890" alt="Image" src="https://github.com/user-attachments/assets/d38558bb-9b0f-49a4-a493-f37f884a719d" />
+<img width="1014" height="814" alt="Image" src="https://github.com/user-attachments/assets/bd76baa5-203c-415d-8ebc-30510f9622bb" />
+<img width="1348" height="890" alt="Image" src="https://github.com/user-attachments/assets/f799bd73-1aa7-4c86-869c-d86ab1e8c57e" />
+<img width="959" height="847" alt="Image" src="https://github.com/user-attachments/assets/d3dc50e7-b39f-44c9-ac8e-1ed1759ea272" />
+<img width="856" height="811" alt="Image" src="https://github.com/user-attachments/assets/0f4b9ed3-7331-4d86-9d99-d3526abf853c" />
 
 ## Core Architecture
 

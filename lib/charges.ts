@@ -1,0 +1,17 @@
+export const CHARGES = {
+  APPOINTMENT: 500,
+  EMERGENCY: 1000,
+
+  ICU_PER_DAY: 8000,
+  GENERAL_WARD_PER_DAY: 3000,
+  SURGERY_WARD_PER_DAY: 12000,
+
+  LAB_TEST: {
+    "Blood Test": 300,
+    MRI: 5000,
+    "CT Scan": 3500,
+    ECG: 800,
+  },
+
+  PRESCRIPTION: 200,
+};

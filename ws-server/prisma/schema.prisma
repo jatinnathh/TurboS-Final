@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//////////////////////////////////////////////////////
+// USER MODEL
+//////////////////////////////////////////////////////
+
+model User {
+  id         String  @id @default(cuid())
+  clerkId    String  @unique
+  email      String  @unique
+  role       Role    @default(USER)
+  department String? // for STAFF users
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  requests      Request[]
+  prescriptions Prescription[]
+}
+
+//////////////////////////////////////////////////////
+// DOCTOR MODEL
+//////////////////////////////////////////////////////
+
+model Doctor {
+  id             String  @id @default(cuid())
+  email          String  @unique
+  password       String
+  name           String
+  specialization String
+  department     String
+  imageUrl       String?
+  available      Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  // 🔹 Normal patient cases assigned
+  requests Request[]
+
+  // 🔹 Prescriptions written
+  prescriptions Prescription[]
+
+  // 🔹 Lab tests assigned to this lab doctor
+  labTests LabTest[] @relation("LabDoctorTests")
+}
+
+//////////////////////////////////////////////////////
+// REQUEST MODEL (Main Case Model)
+//////////////////////////////////////////////////////
+model ChatRoom {
+  id            String   @id @default(uuid())
+  departmentA   String
+  departmentB   String
+  createdAt     DateTime @default(now())
+
+  messages      Message[]
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  roomId   String
+  senderId String
+  content  String
+  createdAt DateTime @default(now())
+
+  room     ChatRoom @relation(fields: [roomId], references: [id])
+}
+model Request {
+  id          String      @id @default(cuid())
+  type        RequestType
+  title       String
+  description String?
+  department  String?
+  priority    Priority    @default(MEDIUM)
+  status      Status      @default(PENDING)
+
+  // 🔹 Appointment & medical info
+  appointmentDate DateTime?
+  wardType        String?
+  doctorName      String?
+
+  // 🔹 Current handling doctor
+  doctorId String?
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 🔹 Patient
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  // 🔹 Relations
+  logs          RequestLog[]
+  prescriptions Prescription[]
+  labTests      LabTest[]
+}
+
+//////////////////////////////////////////////////////
+// REQUEST TIMELINE LOG
+//////////////////////////////////////////////////////
+
+model RequestLog {
+  id String @id @default(cuid())
+
+  requestId String
+  request   Request @relation(fields: [requestId], references: [id])
+
+  department  String
+  action      String
+  performedBy String?
+  status      LogStatus
+
+  createdAt DateTime @default(now())
+}
+
+//////////////////////////////////////////////////////
+// PRESCRIPTION MODEL
+//////////////////////////////////////////////////////
+
+model Prescription {
+  id         String    @id @default(cuid())
+  medication String
+  dosage     String
+  frequency  String
+  startDate  DateTime
+  endDate    DateTime?
+  notes      String?
+
+  doctorId String
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  requestId String
+  request   Request @relation(fields: [requestId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////
+// LAB TEST MODEL
+//////////////////////////////////////////////////////
+
+model LabTest {
+  id String @id @default(cuid())
+
+  requestId String
+  request   Request @relation(fields: [requestId], references: [id])
+
+  department String // Radiology / Pathology / Blood Lab / Cardiac Lab
+  testType   String
+
+  status LabStatus @default(PENDING)
+  result String?
+
+  labDoctorId String?
+  labDoctor   Doctor? @relation("LabDoctorTests", fields: [labDoctorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////////
+
+enum LabStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum LogStatus {
+  COMPLETED
+  IN_PROGRESS
+  PENDING
+}
+
+enum Role {
+  USER
+  STAFF
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum RequestType {
+  APPOINTMENT
+  LAB_TEST
+  EMERGENCY
+  PRESCRIPTION
+  ROOM_BOOKING
+  REPORT_DOWNLOAD
+}

@@ -1,0 +1,487 @@
+:root {
+  /* Medical Theme Color Palette */
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: #e0f2fe;
+
+  --secondary: #10b981;
+  --secondary-dark: #059669;
+  --secondary-light: #d1fae5;
+
+  --accent: #f59e0b;
+
+  --bg-color: #f8fafc;
+  --surface: #ffffff;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  --border-color: #e2e8f0;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+}
+
+/* ✅ FIX 1: Reset margin/padding properly — never use * { margin: 10px } */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ✅ FIX 2: Remove the Vite default #root constraints that break full-width layout */
+#root {
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App Layout ─────────────────────────────────────────── */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: var(--surface);
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* ✅ FIX 3: main-content must fill remaining height and not overflow */
+.main-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;          /* critical for children to scroll independently */
+  overflow: hidden;
+}
+
+/* ── Form Section ───────────────────────────────────────── */
+.form-section {
+  flex: 1;
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--surface);
+  min-width: 0;           /* prevent flex blowout */
+}
+
+/* ── Preview Section ────────────────────────────────────── */
+.preview-section {
+  flex: 1;
+  padding: var(--spacing-xl);
+  background-color: var(--bg-color);
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;           /* prevent flex blowout */
+}
+
+/* ── Form Styles ─────────────────────────────────────────── */
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.form-row > * {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: var(--spacing-xs);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  color: var(--text-main);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px solid var(--primary-light);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-icon {
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+.btn-icon.danger:hover {
+  color: #ef4444;
+  background-color: #fef2f2;
+}
+
+/* ── Dynamic Lists ───────────────────────────────────────── */
+.dynamic-list-item {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+  animation: slideIn var(--transition-fast);
+}
+
+.dynamic-list-item .form-row {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── A4 Document ─────────────────────────────────────────── */
+.a4-document {
+  width: 210mm;
+  min-height: 297mm;
+  background-color: white;
+  box-shadow: var(--shadow-lg);
+  padding: 20mm 15mm;
+  margin: 0 auto;
+  position: relative;
+  font-size: 11pt;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-header {
+  text-align: center;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.clinic-name {
+  font-size: 24pt;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 5px;
+}
+
+.doctor-name {
+  font-size: 14pt;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.clinic-contact {
+  font-size: 9pt;
+  color: var(--text-muted);
+}
+
+.doc-patient-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  background-color: var(--primary-light);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.info-item {
+  display: flex;
+  gap: 8px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 70px;
+}
+
+.info-value {
+  font-weight: 500;
+}
+
+.doc-vitals {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-top: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--border-color);
+  margin-bottom: var(--spacing-lg);
+  font-size: 10pt;
+}
+
+.vital-item {
+  display: flex;
+  gap: 5px;
+}
+
+.doc-body {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-grow: 1;
+}
+
+.doc-sidebar {
+  flex: 0 0 30%;
+  border-right: 1px solid var(--border-color);
+  padding-right: var(--spacing-md);
+}
+
+.doc-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-section-title {
+  font-size: 12pt;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rx-symbol {
+  font-size: 24pt;
+  font-weight: bold;
+  color: var(--text-main);
+  margin-bottom: var(--spacing-md);
+  font-family: serif;
+}
+
+.symptom-list {
+  padding-left: 1rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.symptom-list li {
+  margin-bottom: 4px;
+}
+
+.medication-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.medication-item {
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.med-name {
+  font-weight: 600;
+  font-size: 12pt;
+  margin-bottom: 4px;
+}
+
+.med-details {
+  display: flex;
+  gap: var(--spacing-md);
+  color: var(--text-muted);
+  font-size: 10pt;
+}
+
+.doc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-xl);
+}
+
+.signature-area {
+  text-align: center;
+}
+
+.signature-line {
+  width: 150px;
+  border-bottom: 1px solid var(--text-main);
+  margin-bottom: 5px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .form-section,
+  .preview-section {
+    overflow-y: visible;
+  }
+}
+
+/* ── Print ───────────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background-color: white;
+  }
+
+  .app-header,
+  .form-section {
+    display: none !important;
+  }
+
+  .preview-section {
+    padding: 0;
+    background-color: transparent;
+    display: block;
+  }
+
+  .a4-document {
+    box-shadow: none;
+    margin: 0;
+    padding: 20mm;
+    width: 210mm;
+    height: 297mm;
+  }
+}

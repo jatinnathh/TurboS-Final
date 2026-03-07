@@ -6,7 +6,7 @@ const isPublicRoute = createRouteMatcher([
   "/sign-in(.*)",
   "/sign-up(.*)",
 
-  // Doctor system
+  // Doctor system (JWT)
   "/doctor(.*)",
   "/admin(.*)",
   "/pharmacy(.*)",
@@ -19,12 +19,13 @@ const isPublicRoute = createRouteMatcher([
   // Admin APIs
   "/api/admin(.*)",
 
-  // AI API (ADD THIS)
+  // AI APIs
   "/api/ai(.*)",
 
   "/api/request/flow",
   "/api/request/activity",
 ]);
+
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 

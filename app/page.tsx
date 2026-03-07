@@ -43,7 +43,7 @@ export default function Home() {
         {/* Subtext */}
         <p className="text-slate-500 text-base md:text-lg font-light max-w-xl leading-relaxed mb-14">
           Route patient requests across departments, track treatment timelines,
-          and manage prescriptions — all in one unified platform.
+          and manage prescriptions — all in one unified platform. 
         </p>
 
         {/* CTA Buttons */}

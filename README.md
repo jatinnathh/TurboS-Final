@@ -2,7 +2,6 @@
 
 **Live Application:** https://turbo-s-final.vercel.app/
 
-**Demo & PPT:** https://drive.google.com/drive/folders/1_N9dwrI2mf_mYuYS7rpUbYVtptslWWT4?usp=sharing
 
 ### Login Credentials
 
@@ -36,10 +35,10 @@ Role-based access control protects patient information and enforces department-s
 |--------|-------------|------------------------------------------------------|
 | Patient | Clerk       | Own requests, prescriptions, health status           |
 | Staff   | Clerk       | Department-scoped view and management                |
-| Admin   | Clerk       | Full access — all departments, users, system config  |
+| Admin   | JWT         | Full access — all departments, users, system config  |
 | Doctor  | JWT         | Assigned cases, department chat, lab management      |
 
-- Patients and staff authenticate through **Clerk** (SSO, social login, email)
+- Patients authenticate through **Clerk** (SSO, social login, email)
 - Doctors use a **JWT-based** custom login that integrates with the WebSocket server
 - The JWT secret is shared between the Next.js app and the Socket.IO server, so tokens issued by the API are accepted by the real-time chat layer
 - Every API endpoint enforces role checks before processing any data

@@ -43,7 +43,7 @@ export default function Home() {
         {/* Subtext */}
         <p className="text-slate-500 text-base md:text-lg font-light max-w-xl leading-relaxed mb-14">
           Route patient requests across departments, track treatment timelines,
-          and manage prescriptions — all in one unified platform. 
+          and manage prescriptions — all in one unified platform.
         </p>
 
         {/* CTA Buttons */}
@@ -79,6 +79,7 @@ export default function Home() {
         <div className="flex flex-wrap items-center justify-center gap-2 mt-14">
           {[
             { icon: "🔄", label: "Department Routing" },
+            { icon: "🧠", label: "AI Assisted Clinical Decision Support" },
             { icon: "📋", label: "Activity Timeline" },
             { icon: "💊", label: "Prescriptions" },
             { icon: "🚨", label: "Emergency Triage" },

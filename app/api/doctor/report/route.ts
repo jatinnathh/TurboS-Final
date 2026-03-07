@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getDoctorFromToken } from "@/lib/doctorAuth";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 /**
  * GET  /api/doctor/report?requestId=xxx  — fetch report for a request
@@ -33,6 +34,14 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "requestId required" }, { status: 400 });
     }
 
+    // Stringify array fields — DB columns are String?, not JSON
+    const symptomsStr = Array.isArray(fields.symptoms)
+        ? JSON.stringify(fields.symptoms)
+        : fields.symptoms;
+    const medicationsStr = Array.isArray(fields.medications)
+        ? JSON.stringify(fields.medications)
+        : fields.medications;
+
     // Upsert: create if not exists, update if exists
     const report = await prisma.doctorReport.upsert({
         where: { requestId },
@@ -47,9 +56,9 @@ export async function POST(req: Request) {
             vitalsPulse: fields.vitalsPulse,
             vitalsTemp: fields.vitalsTemp,
             vitalsWeight: fields.vitalsWeight,
-            symptoms: fields.symptoms, // JSON string
+            symptoms: symptomsStr,
             diagnosis: fields.diagnosis,
-            medications: fields.medications, // JSON string
+            medications: medicationsStr,
             advice: fields.advice,
             nextVisit: fields.nextVisit,
         },
@@ -62,13 +71,17 @@ export async function POST(req: Request) {
             vitalsPulse: fields.vitalsPulse,
             vitalsTemp: fields.vitalsTemp,
             vitalsWeight: fields.vitalsWeight,
-            symptoms: fields.symptoms,
+            symptoms: symptomsStr,
             diagnosis: fields.diagnosis,
-            medications: fields.medications,
+            medications: medicationsStr,
             advice: fields.advice,
             nextVisit: fields.nextVisit,
         },
     });
+
+    // Revalidate both patient and doctor views so fresh data shows immediately
+    revalidatePath(`/dashboard/requests/${requestId}`);
+    revalidatePath(`/doctor/requests/${requestId}`);
 
     return NextResponse.json(report);
 }
